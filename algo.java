@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class algo {
-    static int tagsNumber=0;
-    static String[][] tags = new String[100][3];
+    int tagsNumber=0;
+    String[][] tags = new String[100][3];
+    
     public void comperssion() {
         System.out.print("Enter the string you want to comperassion :");
         Scanner scanner = new Scanner(System.in);
@@ -64,7 +65,8 @@ public class algo {
         }
     }
     void decompresion(){
-        String decompline ="";
+
+        String decompline="";
         for(int i =0;i<tagsNumber;i++){
             if(tags[i][0]==tags[i][1] && tags[i][0]=="0"){
                 decompline+=tags[i][2];
@@ -82,16 +84,16 @@ public class algo {
 
         }
         System.out.println(decompline);
-
+      
     }
 
     public static void main(String[] args) {
         int t;
-        algo lz77 =new algo();
         Scanner scanner = new Scanner(System.in);
         System.out.print("enter the number of test cases: ");
         t = scanner.nextInt();
         while (t > 0) {
+            algo lz77 =new algo();
             lz77.comperssion();
             System.out.println("Do you want to decomprasion it ?!(yes/no)");
             String ans=scanner.next();
