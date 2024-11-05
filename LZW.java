@@ -1,77 +1,37 @@
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class LZW implements Algo {
 
     int[] tags = new int[100];
     int tagsCount = 0; // to know how much tags you have
-    // Map<String, Integer> leterDictionary = new HashMap<String, Integer>();
-    // LZW() {
-    // leterDictionary.put("A", 65);
-    // leterDictionary.put("B", 66);
-    // leterDictionary.put("C", 67);
-    // leterDictionary.put("D", 68);
-    // leterDictionary.put("E", 69);
-    // leterDictionary.put("F", 70);
-    // leterDictionary.put("G", 71);
-    // leterDictionary.put("H", 72);
-    // leterDictionary.put("I", 73);
-    // leterDictionary.put("J", 74);
-    // leterDictionary.put("K", 75);
-    // leterDictionary.put("L", 76);
-    // leterDictionary.put("M", 77);
-    // leterDictionary.put("N", 78);
-    // leterDictionary.put("O", 79);
-    // leterDictionary.put("P", 80);
-    // leterDictionary.put("Q", 81);
-    // leterDictionary.put("R", 82);
-    // leterDictionary.put("S", 83);
-    // leterDictionary.put("T", 84);
-    // leterDictionary.put("U", 85);
-    // leterDictionary.put("V", 86);
-    // leterDictionary.put("W", 87);
-    // leterDictionary.put("X", 88);
-    // leterDictionary.put("Y", 89);
-    // leterDictionary.put("Z", 90);
-    // leterDictionary.put("a", 97);
-    // leterDictionary.put("b", 98);
-    // leterDictionary.put("c", 99);
-    // leterDictionary.put("d", 100);
-    // leterDictionary.put("e", 101);
-    // leterDictionary.put("f", 102);
-    // leterDictionary.put("g", 103);
-    // leterDictionary.put("h", 104);
-    // leterDictionary.put("i", 105);
-    // leterDictionary.put("j", 106);
-    // leterDictionary.put("k", 107);
-    // leterDictionary.put("l", 108);
-    // leterDictionary.put("m", 109);
-    // leterDictionary.put("n", 110);
-    // leterDictionary.put("o", 111);
-    // leterDictionary.put("p", 112);
-    // leterDictionary.put("q", 113);
-    // leterDictionary.put("r", 114);
-    // leterDictionary.put("s", 115);
-    // leterDictionary.put("t", 116);
-    // leterDictionary.put("u", 117);
-    // leterDictionary.put("v", 118);
-    // leterDictionary.put("w", 119);
-    // leterDictionary.put("x", 120);
-    // leterDictionary.put("y", 121);
-    // leterDictionary.put("z", 122);
-    // leterDictionary.put(" ", 32);
-    // }
 
     @Override
     public void comperssion() {
+        Scanner scanner = new Scanner(System.in);
         Map<String, Integer> dictionary = new HashMap<String, Integer>();
         int position = 128;
-        
-        System.out.print("Enter the string you want to comperassion :");
-        Scanner scanner = new Scanner(System.in);
-        String lineToCompression = scanner.nextLine();
+        String lineToCompression = "";
+        try {
+            System.out.println("what is the file name: ");
+            String filename = scanner.nextLine();
+            File myObj = new File(filename + ".txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                lineToCompression = myReader.nextLine();
+                // System.out.println(lineToCompression);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            
+        }
 
         int lengthOfLine = lineToCompression.length();
         for (int i = 0; i < lengthOfLine;) {
@@ -108,17 +68,40 @@ public class LZW implements Algo {
             }
 
         }
-        for (int i = 0; i < tagsCount; i++) {
-            System.out.println(tags[i]);
+
+        try {
+            FileWriter myWriter = new FileWriter("filename.txt");
+            for (int i = 0; i < tagsCount; i++) {
+                myWriter.write((int)tags[i]+"\n");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
-        //
     }
 
     public void decompresion() {
         Map<Integer, String> dictionary = new HashMap<Integer, String>();
         String decompString = "";
         int position = 128;
-
+        Scanner scanner =new Scanner(System.in);
+        try {
+            System.out.println("what is the file name you want to read from it the tags: ");
+            String filename = scanner.nextLine();
+            File myObj = new File(filename + ".txt");
+            Scanner myReader = new Scanner(myObj);
+            int i=0;
+            while (myReader.hasNextLine()) {
+                tags[i] = Integer.valueOf(myReader.nextLine());
+                i++;
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            
+        }
         for (int i = 0; i < tagsCount; i++) {
 
             if (tags[i] > 0 && tags[i] < 128) {
@@ -127,10 +110,11 @@ public class LZW implements Algo {
                 decompString = decompString.concat(Character.toString(tags[i]));
 
                 if (i > 0) {
-                    String last=dictionary.get(tags[i-1]);
-                    String firstChar=Character.toString(tags[i]);
-                    String concat =last.concat(firstChar);
-                    //here we take the last tag string and the first leter of the new tag(its only one char 0<char<128 ) and put it in the dictionary
+                    String last = dictionary.get(tags[i - 1]);
+                    String firstChar = Character.toString(tags[i]);
+                    String concat = last.concat(firstChar);
+                    // here we take the last tag string and the first leter of the new tag(its only
+                    // one char 0<char<128 ) and put it in the dictionary
                     dictionary.put(position, concat);
                     position++;
                 }
@@ -142,14 +126,14 @@ public class LZW implements Algo {
                     if (i > 0) {
                         String last = dictionary.get(tags[i - 1]);// to get the last add lenght to add it in dictionary
                         String firstChar = dictionary.get(tags[i]).substring(0, 1);
-                        String concat =last.concat(firstChar);
-                        
-                        dictionary.put(position,concat);
+                        String concat = last.concat(firstChar);
+
+                        dictionary.put(position, concat);
                         position++;
                     }
 
                 } else {
-                    String Unkown = dictionary.get(tags[i-1]);
+                    String Unkown = dictionary.get(tags[i - 1]);
 
                     Unkown = Unkown.concat(Unkown.substring(0, 1));
 
@@ -161,9 +145,18 @@ public class LZW implements Algo {
             }
             // dictionary.forEach((key, value) -> System.out.println(key + " " + value));
 
-
         }
-        System.out.println(decompString);
+        try {
+            FileWriter myWriter = new FileWriter("filename1.txt");
+                myWriter.write(decompString);
+            
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        
 
     }
 }
