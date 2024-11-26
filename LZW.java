@@ -30,6 +30,7 @@ public class LZW implements Algo {
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
+            return;
             
         }
 
@@ -52,21 +53,12 @@ public class LZW implements Algo {
                 i += subStringEnd;
                 continue;
             }
-            if (subStringEnd >= 2) {
 
                 dictionary.put(lineToCompression.substring(i, i + subStringEnd), position);
                 tags[tagsCount] = dictionary.get(lineToCompression.substring(i, i + subStringEnd - 1));
                 tagsCount++;
                 position++;
                 i += subStringEnd - 1;
-
-            } else {
-                int asciiValue = (int) lineToCompression.charAt(i);
-                tags[tagsCount] = asciiValue;
-                tagsCount++;
-                i++;
-            }
-
         }
 
         try {
@@ -79,6 +71,7 @@ public class LZW implements Algo {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            return;
         }
     }
 
@@ -141,7 +134,6 @@ public class LZW implements Algo {
                     position++;
                     decompString = decompString.concat(Unkown);
                 }
-
             }
             // dictionary.forEach((key, value) -> System.out.println(key + " " + value));
 
