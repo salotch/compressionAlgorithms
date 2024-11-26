@@ -35,10 +35,10 @@ public class Main {
             else if (number==3) {
                 standerdHuffman h=new standerdHuffman();
                 h.comperssion();
-                System.out.println("Do you want to decomprasion it ?!(yes/no)");
-                String ans = scanner.next();
-                if (ans.equalsIgnoreCase("yes"))
-                    h.decompresion();
+                // System.out.println("Do you want to decomprasion it ?!(yes/no)");
+                // String ans = scanner.next();
+                // if (ans.equalsIgnoreCase("yes"))
+                //     lzw.decompresion();
                 t--;
             }
         }
