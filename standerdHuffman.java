@@ -61,8 +61,6 @@ public class standerdHuffman implements Algo {
             hTree.add(totalnode);
         }
         root=hTree.poll();
-        System.out.println(root.data);
-        System.out.println(root.left.data);
         print(root,new StringBuilder());
         Huffmanprint();
 
@@ -89,7 +87,7 @@ public class standerdHuffman implements Algo {
             for(char c:lineToCompression.toCharArray()){
                 resultString.append(result.get(c));
             }
-            System.out.println(resultString);
+            // System.out.println(resultString);
             try {
             FileWriter myWriter = new FileWriter("filename.txt");
             for (int i = 0; i < resultString.length(); i++) {
