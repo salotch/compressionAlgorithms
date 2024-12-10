@@ -43,19 +43,22 @@ public class standerdHuffman implements Algo {
             System.out.println("An error occurred.");
             
         }
+        
         HashMap<Character,Integer> freqmap=new HashMap<>();
         for(char c:lineToCompression.toCharArray()){
             freqmap.put(c,freqmap.getOrDefault(c, 0)+1);
         }
+
         PriorityQueue<Node>hTree=new PriorityQueue<>((x,y)-> x.f - y.f);
         for (char c : freqmap.keySet()) {
             hTree.add(new Node(c,freqmap.get(c)));
-            
+
         }
+    
         while(hTree.size()>1){
             Node left = hTree.poll();
             Node right =hTree.poll();
-            Node totalnode=new Node('S', left.f+right.f);
+            Node totalnode=new Node('$', left.f+right.f);
             totalnode.left=left;
             totalnode.right=right;
             hTree.add(totalnode);
@@ -63,12 +66,11 @@ public class standerdHuffman implements Algo {
         root=hTree.poll();
         print(root,new StringBuilder());
         Huffmanprint();
-
-
         }
         void print(Node root,StringBuilder code){
             if(root==null)return;
-            if(root.data!='S'){
+            
+            if(root.data!='$'){
                 result.put(root.data,code.toString());
                     // System.out.println(root.data + ": " + code);
             }
