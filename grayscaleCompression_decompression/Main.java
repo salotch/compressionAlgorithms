@@ -19,5 +19,13 @@ public class Main {
         ImageCompression.compress("grayscaleCompression_decompression\\"+inputImagePath, compressedFilePath, blockSize, codebookSize);
 
         System.out.println("Compression complete!");
+       
+        System.out.println("Please enter the output image file name (output.png):");
+        String outputFilePath = scanner.next();
+
+        ImageDecompression.decompress(compressedFilePath, "grayscaleCompression_decompression/" + outputFilePath);
+
+        System.out.println("Decompression complete! Image saved as " + outputFilePath);
+        
     }
 }

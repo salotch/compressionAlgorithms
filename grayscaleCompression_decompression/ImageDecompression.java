@@ -78,17 +78,5 @@ public class ImageDecompression {
 
         ImageIO.write(bufferedImage, "jpg", new File(outputFilePath));
     }
-
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the path of the compressed file:");
-        String compressedFilePath = scanner.next();
-
-        System.out.println("Please enter the output image file name (output.png):");
-        String outputFilePath = scanner.next();
-
-        decompress(compressedFilePath, "grayscaleCompression_decompression/" + outputFilePath);
-
-        System.out.println("Decompression complete! Image saved as " + outputFilePath);
-    }
+   
 }
