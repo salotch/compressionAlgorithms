@@ -14,7 +14,7 @@ public class Main {
         System.out.println("please enter codebooksize: ");
         Integer codebookSize=scanner.nextInt(); 
 
-        String compressedFilePath = "compressed.bin";  // Compressed output file
+        String compressedFilePath = "grayscaleCompression_decompression\\compressed.bin"; // Compressed output file
 
         ImageCompression.compress("grayscaleCompression_decompression\\"+inputImagePath, compressedFilePath, blockSize, codebookSize);
 
